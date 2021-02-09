@@ -1,10 +1,15 @@
 import "./styles.css";
+import NutritionList from "./components/Container/NutritionList";
+import MainHeader from "./components/Header/Header";
+import { Grommet } from "grommet";
 
 export default function App() {
   return (
     <div className="App">
-      <h1>Hello CodeSandbox</h1>
-      <h2>Start editing to see some magic happen!</h2>
+      <Grommet>
+        <MainHeader />
+        <NutritionList />
+      </Grommet>
     </div>
   );
 }
