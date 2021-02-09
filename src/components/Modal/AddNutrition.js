@@ -10,21 +10,20 @@ import {
   Layer,
   Select,
   TextArea,
+  Form,
   TextInput
 } from "grommet";
 
-const suggestions = ["alpha", "beta"];
-
-const AddNutrition = ({ open, setOpen }) => {
+const AddNutrition = ({ open, setOpen, data }) => {
   const [select, setSelect] = React.useState("");
 
   const onOpen = () => setOpen(true);
-
   const onClose = () => setOpen(undefined);
+  // Auto suggest enabling here
+  const suggestions = data && data.map((each) => each.dessert);
 
   return (
     <Box fill align="center" justify="center">
-      <Button icon={<Add />} label="Add" onClick={onOpen} />
       {open && (
         <Layer
           position="right"
@@ -47,26 +46,37 @@ const AddNutrition = ({ open, setOpen }) => {
               </Heading>
               <Button icon={<Close />} onClick={onClose} />
             </Box>
-            <Box flex="grow" overflow="auto" pad={{ vertical: "medium" }}>
-              <FormField label="Desert Name *" required>
-                <TextInput suggestions={suggestions} />
-              </FormField>
-              <FormField label="Calories *" required>
-                <TextInput />
-              </FormField>
-              <FormField label="Fat*" required>
-                <TextInput />
-              </FormField>
-              <FormField label="Carbs*" required>
-                <TextInput />
-              </FormField>
-              <FormField label="Protein*" required>
-                <TextInput />
-              </FormField>
-            </Box>
-            <Box flex={false} as="footer" align="start">
-              <Button type="submit" label="Submit" onClick={onClose} primary />
-            </Box>
+            <Form
+              validate="blur"
+              onReset={(event) => console.log(event)}
+              onSubmit={({ value }) => console.log("Submit", value)}
+            >
+              <Box flex="grow" overflow="auto" pad={{ vertical: "medium" }}>
+                <FormField name="dessert" label="Desert Name *" required>
+                  <TextInput name="dessert" suggestions={suggestions} />
+                </FormField>
+                <FormField name="calories" label="Calories *" required>
+                  <TextInput name="calories" />
+                </FormField>
+                <FormField name="fat" label="Fat *" required>
+                  <TextInput name="fat" />
+                </FormField>
+                <FormField name="carb" label="Carbs *" required>
+                  <TextInput name="carb" />
+                </FormField>
+                <FormField name="protein" label="Protein *" required>
+                  <TextInput name="protein" />
+                </FormField>
+              </Box>
+              <Box flex={false} as="footer" align="start">
+                <Button
+                  type="submit"
+                  label="Submit"
+                  onClick={onClose}
+                  primary
+                />
+              </Box>
+            </Form>
           </Box>
         </Layer>
       )}

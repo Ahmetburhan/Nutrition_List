@@ -28,8 +28,8 @@ export const NutritionTable = () => {
           Nutrition List{" "}
         </Heading>
       </Box>
-      <AddNutrition open={open} setOpen={setOpen} />
-      <TableControls selected={selected} />
+      <AddNutrition open={open} setOpen={setOpen} data={data} />
+      <TableControls selected={selected} open={open} setOpen={setOpen} />
       <Box height={{ max: "large" }} overflow="auto">
         <DataTable
           data={data}
@@ -50,7 +50,10 @@ const ActionsMenu = styled(Menu)`
     ${({ theme }) => theme.global.colors.border[theme.dark ? "dark" : "light"]};
 `;
 
-const TableControls = ({ selected }) => {
+const TableControls = ({ selected, open, setOpen }) => {
+  const AddNutrition = (records) => {
+    setOpen(true);
+  };
   const ActionHandler = (records) => {
     // eslint-disable-next-line no-alert
     alert(
@@ -78,7 +81,7 @@ const TableControls = ({ selected }) => {
           {
             label: "Add",
             onClick: () => {
-              ActionHandler(selected);
+              AddNutrition();
             }
           },
           {
