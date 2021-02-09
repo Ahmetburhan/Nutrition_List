@@ -19,13 +19,16 @@ const defaultForm = {
   carb: "",
   protein: ""
 };
-const AddNutrition = ({ open, setOpen, data }) => {
+const AddNutrition = ({ open, setOpen, data, setData }) => {
   const [select, setSelect] = React.useState("");
   const [formValues, setFormValues] = React.useState({ ...defaultForm });
-  const onOpen = () => setOpen(true);
   const onClose = () => setOpen(undefined);
   // Auto suggest enabling here
   const suggestions = data && data.map((each) => each.dessert);
+
+  const handleSubmit = () => {
+    setData([...data, ...formValues]);
+  };
   console.log("values", formValues);
   return (
     <Box fill align="center" justify="center">
@@ -55,7 +58,7 @@ const AddNutrition = ({ open, setOpen, data }) => {
               value={formValues}
               validate="blur"
               onReset={(event) => console.log(event)}
-              onSubmit={({ value }) => console.log("Submit", value)}
+              onSubmit={handleSubmit}
               onChange={setFormValues}
             >
               <Box flex="grow" overflow="auto" pad={{ vertical: "medium" }}>

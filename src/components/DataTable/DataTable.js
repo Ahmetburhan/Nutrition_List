@@ -10,10 +10,11 @@ import {
   Text
 } from "grommet";
 import AddNutrition from "../Modal/AddNutrition";
-import { data, columns } from "./__data__/MockData";
+import { data as mockData, columns } from "./__data__/MockData";
 
 export const NutritionTable = () => {
   const size = useContext(ResponsiveContext);
+  const [data, setData] = useState(mockData);
   const [selected, setSelected] = useState([]);
   const [open, setOpen] = useState(false);
   return (
@@ -28,7 +29,12 @@ export const NutritionTable = () => {
           Nutrition List{" "}
         </Heading>
       </Box>
-      <AddNutrition open={open} setOpen={setOpen} data={data} />
+      <AddNutrition
+        open={open}
+        setOpen={setOpen}
+        data={data}
+        setData={setData}
+      />
       <TableControls selected={selected} open={open} setOpen={setOpen} />
       <Box height={{ max: "large" }} overflow="auto">
         <DataTable
