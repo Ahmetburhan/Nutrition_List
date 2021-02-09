@@ -1,6 +1,6 @@
 import React from "react";
 
-import { Add, Close } from "grommet-icons";
+import { Close } from "grommet-icons";
 
 import {
   Box,
@@ -8,20 +8,25 @@ import {
   FormField,
   Heading,
   Layer,
-  Select,
-  TextArea,
   Form,
   TextInput
 } from "grommet";
 
+const defaultForm = {
+  dessert: "",
+  calories: "",
+  fat: "",
+  carb: "",
+  protein: ""
+};
 const AddNutrition = ({ open, setOpen, data }) => {
   const [select, setSelect] = React.useState("");
-
+  const [formValues, setFormValues] = React.useState({ ...defaultForm });
   const onOpen = () => setOpen(true);
   const onClose = () => setOpen(undefined);
   // Auto suggest enabling here
   const suggestions = data && data.map((each) => each.dessert);
-
+  console.log("values", formValues);
   return (
     <Box fill align="center" justify="center">
       {open && (
@@ -47,9 +52,11 @@ const AddNutrition = ({ open, setOpen, data }) => {
               <Button icon={<Close />} onClick={onClose} />
             </Box>
             <Form
+              value={formValues}
               validate="blur"
               onReset={(event) => console.log(event)}
               onSubmit={({ value }) => console.log("Submit", value)}
+              onChange={setFormValues}
             >
               <Box flex="grow" overflow="auto" pad={{ vertical: "medium" }}>
                 <FormField name="dessert" label="Desert Name *" required>
@@ -68,7 +75,13 @@ const AddNutrition = ({ open, setOpen, data }) => {
                   <TextInput name="protein" />
                 </FormField>
               </Box>
-              <Box flex={false} as="footer" align="start">
+              <Box direction="row" justify="between" margin={{ top: "medium" }}>
+                <Button
+                  type="reset"
+                  label="Reset"
+                  onClick={() => setFormValues({ ...defaultForm })}
+                  error
+                />
                 <Button
                   type="submit"
                   label="Submit"
