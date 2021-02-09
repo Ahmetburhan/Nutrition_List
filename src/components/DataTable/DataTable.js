@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useContext } from "react";
 import PropTypes from "prop-types";
 import styled from "styled-components";
 import {
@@ -9,12 +9,13 @@ import {
   ResponsiveContext,
   Text
 } from "grommet";
+import AddNutrition from "../Modal/AddNutrition";
 import { data, columns } from "./__data__/MockData";
 
 export const NutritionTable = () => {
-  const size = React.useContext(ResponsiveContext);
-  const [selected, setSelected] = React.useState([]);
-
+  const size = useContext(ResponsiveContext);
+  const [selected, setSelected] = useState([]);
+  const [open, setOpen] = useState(false);
   return (
     <>
       <Box align="start">
@@ -27,6 +28,7 @@ export const NutritionTable = () => {
           Nutrition List{" "}
         </Heading>
       </Box>
+      <AddNutrition open={open} setOpen={setOpen} />
       <TableControls selected={selected} />
       <Box height={{ max: "large" }} overflow="auto">
         <DataTable
@@ -36,7 +38,7 @@ export const NutritionTable = () => {
           select={selected}
           onSelect={setSelected}
           // resizeable
-          sort
+          sort={true}
         />
       </Box>
     </>
