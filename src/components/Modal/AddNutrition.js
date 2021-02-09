@@ -6,14 +6,12 @@ import {
   Box,
   Button,
   FormField,
-  Grommet,
   Heading,
   Layer,
   Select,
   TextArea,
   TextInput
 } from "grommet";
-import { grommet } from "grommet/themes";
 
 const suggestions = ["alpha", "beta"];
 
@@ -45,33 +43,25 @@ const AddNutrition = ({ open, setOpen }) => {
           >
             <Box flex={false} direction="row" justify="between">
               <Heading level={2} margin="none">
-                Add
+                Add a Nutriton
               </Heading>
               <Button icon={<Close />} onClick={onClose} />
             </Box>
             <Box flex="grow" overflow="auto" pad={{ vertical: "medium" }}>
-              <FormField label="First">
+              <FormField label="Desert Name *" required>
                 <TextInput suggestions={suggestions} />
               </FormField>
-              <FormField label="Second">
-                <Select
-                  options={[
-                    "one",
-                    "two",
-                    "three",
-                    "four",
-                    "five",
-                    "six",
-                    "seven",
-                    "eight"
-                  ]}
-                  value={select}
-                  onSearch={() => {}}
-                  onChange={({ option }) => setSelect(option)}
-                />
+              <FormField label="Calories *" required>
+                <TextInput />
               </FormField>
-              <FormField label="Third">
-                <TextArea />
+              <FormField label="Fat*" required>
+                <TextInput />
+              </FormField>
+              <FormField label="Carbs*" required>
+                <TextInput />
+              </FormField>
+              <FormField label="Protein*" required>
+                <TextInput />
               </FormField>
             </Box>
             <Box flex={false} as="footer" align="start">
