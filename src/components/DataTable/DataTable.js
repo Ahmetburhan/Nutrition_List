@@ -17,6 +17,7 @@ export const NutritionTable = () => {
   const [data, setData] = useState(mockData);
   const [selected, setSelected] = useState([]);
   const [open, setOpen] = useState(false);
+  console.log("data", data);
   return (
     <>
       <Box align="start">
@@ -35,7 +36,13 @@ export const NutritionTable = () => {
         data={data}
         setData={setData}
       />
-      <TableControls selected={selected} open={open} setOpen={setOpen} />
+      <TableControls
+        selected={selected}
+        open={open}
+        setOpen={setOpen}
+        data={data}
+        setData={setData}
+      />
       <Box height={{ max: "large" }} overflow="auto">
         <DataTable
           data={data}
@@ -43,8 +50,7 @@ export const NutritionTable = () => {
           pin={size === "small"}
           select={selected}
           onSelect={setSelected}
-          // resizeable
-          sort={true}
+          sort
         />
       </Box>
     </>
@@ -56,19 +62,13 @@ const ActionsMenu = styled(Menu)`
     ${({ theme }) => theme.global.colors.border[theme.dark ? "dark" : "light"]};
 `;
 
-const TableControls = ({ selected, open, setOpen }) => {
+const TableControls = ({ selected, setOpen, data, setData }) => {
   const AddNutrition = (records) => {
     setOpen(true);
   };
   const ActionHandler = (records) => {
-    // eslint-disable-next-line no-alert
-    alert(
-      `
-      Handler called to perform an action
-      against these records:
-      [${records}]
-      `
-    );
+    const filteredData = data.filter((each) => !records.includes(each.dessert));
+    setData([...filteredData]);
   };
 
   return (
@@ -106,7 +106,7 @@ TableControls.propTypes = {
   selected: PropTypes.array
 };
 
-const SelectionSummary = ({ selected }) => {
+const SelectionSummary = ({ selected, data }) => {
   return (
     <>
       {selected && (

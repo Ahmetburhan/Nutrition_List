@@ -26,7 +26,9 @@ const AddNutrition = ({ open, setOpen, data, setData }) => {
   // Auto suggest enabling here
   const suggestions = data && data.map((each) => each.dessert);
 
-  const handleSubmit = () => {
+  const handleSubmit = (e) => {
+    e.preventDafault();
+    console.log("formvalues submited", ...formValues);
     setData([...data, ...formValues]);
   };
   console.log("values", formValues);
@@ -88,7 +90,10 @@ const AddNutrition = ({ open, setOpen, data, setData }) => {
                 <Button
                   type="submit"
                   label="Submit"
-                  onClick={onClose}
+                  onClick={(e) => {
+                    handleSubmit(e);
+                    onClose();
+                  }}
                   primary
                 />
               </Box>
