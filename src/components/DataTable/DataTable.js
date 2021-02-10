@@ -66,9 +66,15 @@ const TableControls = ({ selected, setOpen, data, setData }) => {
   const AddNutrition = (records) => {
     setOpen(true);
   };
-  const ActionHandler = (records) => {
-    const filteredData = data.filter((each) => !records.includes(each.dessert));
-    setData([...filteredData]);
+  const ActionHandler = (records, action) => {
+    let filteredData;
+    if (action === "remove") {
+      filteredData = data.filter((each) => !records.includes(each.dessert));
+      setData([...filteredData]);
+    } else {
+      filteredData = data.filter((each) => records.includes(each.dessert));
+      setData([...data, ...filteredData]);
+    }
   };
 
   return (
@@ -91,9 +97,15 @@ const TableControls = ({ selected, setOpen, data, setData }) => {
             }
           },
           {
+            label: "Duplicate",
+            onClick: () => {
+              ActionHandler(selected, "duplicate");
+            }
+          },
+          {
             label: "Remove",
             onClick: () => {
-              ActionHandler(selected);
+              ActionHandler(selected, "remove");
             }
           }
         ]}

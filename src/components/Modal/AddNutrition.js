@@ -25,16 +25,32 @@ const AddNutrition = ({ open, setOpen, data, setData }) => {
   const onClose = () => setOpen(undefined);
   // Auto suggest enabling here
   const suggestions = data && data.map((each) => each.dessert);
+  const { dessert, calories, fat, carb, protein } = formValues;
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const { dessert, calories, fat, carb, protein } = formValues;
     const submitValues = {
       dessert,
       nutritionInfo: { calories, fat, carb, protein }
     };
     console.log("formvalues submited", submitValues);
     setData([...data, submitValues]);
+  };
+  const validateForm = () => {
+    const filled =
+      dessert === "" ||
+      calories === "" ||
+      fat === "" ||
+      carb === "" ||
+      protein === "";
+    console.log("filled", filled);
+    return (
+      dessert === "" ||
+      calories === "" ||
+      fat === "" ||
+      carb === "" ||
+      protein === ""
+    );
   };
   console.log("values", formValues);
   return (
@@ -98,6 +114,7 @@ const AddNutrition = ({ open, setOpen, data, setData }) => {
                 <Button
                   type="submit"
                   label="Submit"
+                  // disabled={validateForm}
                   onClick={(e) => {
                     handleSubmit(e);
                     onClose();
