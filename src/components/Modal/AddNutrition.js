@@ -27,9 +27,14 @@ const AddNutrition = ({ open, setOpen, data, setData }) => {
   const suggestions = data && data.map((each) => each.dessert);
 
   const handleSubmit = (e) => {
-    e.preventDafault();
-    console.log("formvalues submited", ...formValues);
-    setData([...data, ...formValues]);
+    e.preventDefault();
+    const { dessert, calories, fat, carb, protein } = formValues;
+    const submitValues = {
+      dessert,
+      nutritionInfo: { calories, fat, carb, protein }
+    };
+    console.log("formvalues submited", submitValues);
+    setData([...data, submitValues]);
   };
   console.log("values", formValues);
   return (
@@ -59,6 +64,9 @@ const AddNutrition = ({ open, setOpen, data, setData }) => {
             <Form
               value={formValues}
               validate="blur"
+              messages={{
+                required: "This is a required field."
+              }}
               onReset={(event) => console.log(event)}
               onSubmit={handleSubmit}
               onChange={setFormValues}
